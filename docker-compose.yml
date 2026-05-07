@@ -1,0 +1,16 @@
+services:
+  frontend:
+    container_name: frontend
+    build: .
+    ports:
+      - "80:80"
+    networks:
+      - tienda-net
+    command: >-
+      /bin/sh -c "sed -i 's/IP_PRIVADA_BACKEND/backend/g' /etc/nginx/conf.d/default.conf
+      && nginx -g 'daemon off;'"
+    restart: unless-stopped
+
+networks:
+  tienda-net:
+    external: true
